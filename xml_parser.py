@@ -17,8 +17,6 @@ for source in root.findall('Source'):
 
 str_breakdown = ts.replace('.0', '').replace('GMT', '').replace('-', ' ').replace(' ', ':').split(':')
 
-#print str_breakdown
-
 gmt = pytz.timezone('GMT')
 eastern = pytz.timezone('US/Eastern')
 utc = pytz.utc
