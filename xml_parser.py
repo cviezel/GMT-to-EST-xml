@@ -50,15 +50,30 @@ print "Replaced Old Timestamp with New Timestamp"
 # create the file structure
 data1 = ET.Element('IP_Address')
 data1.text = ip
-data2 = ET.Element('Timestamp')
-data2.text = ret
+
+new_date = ret.replace('.0', '').replace('GMT', '').replace('-', ' ').replace(' ', ':').split(':')
+#print new_date
+
+new_ret = new_date[1] + "/" + str(int(new_date[2])-1) + "/" + new_date[0] + ":" + new_date[3] + ":" + new_date[4] + ":" + new_date[5]
+#print new_ret
+
+data2 = ET.Element('Earliest_Timestamp')
+data2.text = new_ret
+
+new_ret2 = new_date[1] + "/" + str(int(new_date[2])) + "/" + new_date[0] + ":" + new_date[3] + ":" + new_date[4] + ":" + new_date[5]
+data3 = ET.Element('Latest_Timestamp')
+data3.text = new_ret2
 
 # create a new XML file with the results
 mydata1 = ET.tostring(data1)
 mydata2 = ET.tostring(data2)
+mydata3 = ET.tostring(data3)
 myfile = open("output.xml", "w")
+
 myfile.write(mydata1)
 myfile.write("\n")
 myfile.write(mydata2)
+myfile.write("\n")
+myfile.write(mydata3)
 
-print "IP Address and Timestamp written to output.xml"
+print "Splunk-Formatted IP Address and Timestamp written to output.xml"
