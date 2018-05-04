@@ -75,16 +75,25 @@ new_date = ret.replace('.0', '').replace('GMT', '').replace('-', ' ').replace(' 
 
 
 #subtracting a day to get yesterday
-#TODO: make sure that this gets the correct "yesterday date" ie: May 1st's "yesterday" is April 30th not May 0
-yesterday = int(new_date[2])-1
+month = int(new_date[1])
+day = int(new_date[2])
+if(day == 1):
+    if(month == 1 or month == 3 or month == 5 or month == 7 or month == 8 or month == 10 or month == 12):
+        yesterday = 31
+    elif(month == 4 or month == 6 or month == 9 or month == 11):
+        yesterday = 30
+    elif(month == 2):
+        yesterday = 28
+else:
+    yesterday = day-1
 
 #creating earliest timestamp
-new_ret = new_date[1] + "/" + str(yesterday) + "/" + new_date[0] + ":" + new_date[3] + ":" + new_date[4] + ":" + new_date[5]
+new_ret = str(month) + "/" + str(yesterday) + "/" + new_date[0] + ":" + new_date[3] + ":" + new_date[4] + ":" + new_date[5]
 data2 = ET.Element('Earliest_Timestamp')
 data2.text = new_ret
 
 #creating latest timestamp
-new_ret2 = new_date[1] + "/" + str(int(new_date[2])) + "/" + new_date[0] + ":" + new_date[3] + ":" + new_date[4] + ":" + new_date[5]
+new_ret2 = str(month) + "/" + str(day) + "/" + new_date[0] + ":" + new_date[3] + ":" + new_date[4] + ":" + new_date[5]
 data3 = ET.Element('Latest_Timestamp')
 data3.text = new_ret2
 
